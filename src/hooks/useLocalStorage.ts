@@ -27,3 +27,7 @@ const useLocalStorage = <T>(
 }
 
 export default useLocalStorage
+
+/*
+redux-persist를 사용하면 해당 로직은 필요없어진다.
+*/

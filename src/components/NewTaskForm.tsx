@@ -5,11 +5,11 @@ import { addTask } from '../redux/tasks'
 
 const NewTaskForm = (props: any) => {
   const [task, setTask] = useState('')
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() //redux의 dispatch를 불러온다. react-redux에서 제공하는 훅
 
   const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    dispatch(addTask(task))
+    dispatch(addTask(task)) // dispatch에 acrion값을 넣으면 된다. 이를 위해서 action을 따로 만들어서 정의해줬다.
     setTask('')
   }
 

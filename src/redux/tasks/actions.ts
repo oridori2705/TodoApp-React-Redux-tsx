@@ -33,7 +33,11 @@ export const removeTask = (id: string): Action => {
     payload: {
       id,
       content: '',
-      complete: false
+      complete: false //id만 적으면 되지만 Typescript로 인해서 content와 complete도 추가해줘야한다.
     }
   }
 }
+
+/*
+main.tsx에서 Provide로 감싸줬기 때문에 action을 이용해서 Reducer에 접근한다.
+*/
