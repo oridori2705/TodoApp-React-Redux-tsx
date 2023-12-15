@@ -10,7 +10,16 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react', 'prettier'],
-
+  rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto'
+      }
+    ],
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': ['off']
+  },
   parserOptions: {
     parser: '@typescript-eslint/parser'
   }
