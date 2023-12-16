@@ -1,10 +1,9 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux'
-import logger from 'redux-logger'
+import { combineReducers } from 'redux'
 import { persistReducer, persistStore } from 'redux-persist'
 // import storage from 'redux-persist/lib/storage' // Local storage를 사용함
 import { tasks } from './tasks'
-import { composeWithDevTools } from '@redux-devtools/extension'
 import session from 'redux-persist/lib/storage/session' // Session Storage를 사용함
+import { configureStore } from '@reduxjs/toolkit'
 
 //redux-persist를 사용하기위해 설정 객체가 필요하다.
 const persistConfig = {
@@ -13,18 +12,20 @@ const persistConfig = {
   whitelist: ['tasks'] // 어떤 reducer을 허용해 줄 것인가를 지정해줘야한다.(명시하지 않으면 모든 reducer가 지정된다.)
 }
 
-const combinedReducer = combineReducers({ tasks })
+const combinedReducer = combineReducers({ tasks: tasks.reducer })
 
 export const rootReducer = persistReducer(persistConfig, combinedReducer)
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(logger)) // logger 라이브러리 사용
-)
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({ serializableCheck: false }),
+  devTools: true
+})
 
 export const persistor = persistStore(store as any) // localStorage나 sessionStorage의 값들을 빼오기위해 사용한다. 타입을 자동으로 지정한다.(안되면 as any 로함)
 
-export type RootState = ReturnType<typeof rootReducer> // useSelector사용시 나타나는 ('DefaultRootState' 형식에 'tasks' 속성이 없습니다.) 에러를 해결한다.
+export type RootState = ReturnType<typeof store.getState> // useSelector사용시 나타나는 ('DefaultRootState' 형식에 'tasks' 속성이 없습니다.) 에러를 해결한다.
 
 /*
 rootReducer을 만들어줘야함

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ChangeEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addTask } from '../redux/tasks'
+import { tasks } from '~/redux/tasks'
 
 const NewTaskForm = (props: any) => {
   const [task, setTask] = useState('')
@@ -9,7 +9,7 @@ const NewTaskForm = (props: any) => {
 
   const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    dispatch(addTask(task)) // dispatch에 acrion값을 넣으면 된다. 이를 위해서 action을 따로 만들어서 정의해줬다.
+    dispatch(tasks.actions.add(task)) // dispatch에 acrion값을 넣으면 된다. 이를 위해서 action을 따로 만들어서 정의해줬다.
     setTask('')
   }
 
